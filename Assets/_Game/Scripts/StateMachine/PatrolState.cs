@@ -17,7 +17,7 @@ public class PatrolState : IState
         timer += Time.deltaTime;
         if (timer < randomTime)
         {
-             enemy.Moving();
+            enemy.Moving();
         } 
         else
         {

@@ -15,7 +15,7 @@ public class Enemy : Character
 
     private void Update()
     {
-        if(currentState != null)
+        if (currentState != null)
         {
             currentState.OnExecute(this);
         }
@@ -44,6 +44,8 @@ public class Enemy : Character
         {
             currentState.OnExit(this);
         }
+
+        currentState = newState;
 
         if(currentState != null)
         {
