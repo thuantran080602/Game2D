@@ -8,6 +8,7 @@ TagManager:
   - DeathZone
   - SavePoint
   - EnemyWall
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 
