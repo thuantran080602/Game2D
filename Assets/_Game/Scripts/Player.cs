@@ -13,7 +13,7 @@ public class Player : Character
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
-    
+
     private bool isInvincible = false;// danh dau trang thai bat tu cua doi tuong
     private float invincibleDuration = 5f;// Thoi gian bat tu
     private float invincibleTimer = 0f;// Dem nguoc thoi gian bat tu
@@ -21,9 +21,7 @@ public class Player : Character
     private bool isJumping = false;
     private bool isAttack = false;
     private bool isDeath = false;
-
     private float horizontal;
-
     private int coin = 0;
     private Vector3 savePoint;
 
@@ -231,16 +229,10 @@ public class Player : Character
         invincibleTimer = invincibleDuration;
     }
 
-    //public void OnHit(float damage)
+    //public override void OnHit(float damage)
     //{
-    //    if (!IsDead)
+    //    if (hp < 30f)
     //    {
-    //        hp -= damage;
-    //        if (hp <= 30f)
-    //        {
-    //            MakeInvincible();
-    //            Debug.Log("Bat tu");
-    //        }
     //        if (IsDead)
     //        {
     //            hp = 0;
@@ -248,6 +240,10 @@ public class Player : Character
     //        }
     //        healthBar.SetNewHp(hp);
     //        Instantiate(CombatTextPrefab, transform.position + Vector3.up, Quaternion.identity).OnInit(damage);
+    //    }
+    //    else
+    //    {
+
     //    }
     //}
 }

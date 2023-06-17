@@ -8,13 +8,14 @@ public class Character : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] protected HealthBar healthBar;
     [SerializeField] protected CombatText CombatTextPrefab;
+    [SerializeField] public float hp = 100;
 
     public float regenRate = 5f;// toc do hoi mau(so giay giua moi lan hoi mau)
     public float regenAmount = 10f;// so luong mau hoi moi lan
     private bool isRegenHealth;// kiem tra xem hoi mau dang thuc hien ko
     public float maxHp = 100;
-    public float hp;
     private string currentAnimName;
+    
 
 
     public bool IsDead => hp <= 0;
