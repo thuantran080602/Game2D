@@ -13,9 +13,10 @@ public class Player : Character
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
-
-
-
+    
+    private bool isInvincible = false;// danh dau trang thai bat tu cua doi tuong
+    private float invincibleDuration = 5f;// Thoi gian bat tu
+    private float invincibleTimer = 0f;// Dem nguoc thoi gian bat tu
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isAttack = false;
@@ -23,9 +24,7 @@ public class Player : Character
 
     private float horizontal;
 
-
     private int coin = 0;
-
     private Vector3 savePoint;
 
     private void Awake()
@@ -36,6 +35,17 @@ public class Player : Character
     // Update is called once per frame
     void Update()
     {
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+
+            if (invincibleTimer <= 0f)
+            {
+                // Khi thoi gian bat tu ket thuc
+                isInvincible = false;
+                // Cac xu ly khac khi ket thuc bat tu(neu co)
+            }
+        }
        // Debug.LogError("Update");
 
         if (IsDead)
@@ -110,11 +120,11 @@ public class Player : Character
         }
     }
 
+    
     public void OnInit()
     {
         base.OnInit();
         isAttack = false;
-
         transform.position = savePoint;
         ChangeAnim("idle");
         DeActiveAttack();
@@ -164,7 +174,6 @@ public class Player : Character
         ChangeAnim("throw");
         isAttack = true;
         Invoke(nameof(ResetAttack), 0.5f);
-
         Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
 
     }
@@ -177,17 +186,17 @@ public class Player : Character
 
     public void Jump()
     {
-        isJumping = true;
-        ChangeAnim("jump");
-        rb.AddForce(jumpForce * Vector2.up);
+        if (isGrounded)
+        {
+            isJumping = true;
+            ChangeAnim("jump");
+            rb.AddForce(jumpForce * Vector2.up);
+        }
     }
-
-    
     internal void SavePoint()
     {
         savePoint = transform.position;
     }
-
     private void ActiveAttack()
     {
         attackArea.SetActive(true);
@@ -196,7 +205,6 @@ public class Player : Character
     {
         attackArea.SetActive(false);
     }
-
     public void SetMove(float horizontal)
     {
         this.horizontal = horizontal;
@@ -213,10 +221,33 @@ public class Player : Character
         if (collision.tag == "DeathZone")
         {
             ChangeAnim("die");
-
             Invoke(nameof(OnInit), 1f);
         }
+        Heal(20);
+    }
+    public void MakeInvincible()
+    {
+        isInvincible = true;
+        invincibleTimer = invincibleDuration;
     }
 
-   
+    //public void OnHit(float damage)
+    //{
+    //    if (!IsDead)
+    //    {
+    //        hp -= damage;
+    //        if (hp <= 30f)
+    //        {
+    //            MakeInvincible();
+    //            Debug.Log("Bat tu");
+    //        }
+    //        if (IsDead)
+    //        {
+    //            hp = 0;
+    //            OnDeath();
+    //        }
+    //        healthBar.SetNewHp(hp);
+    //        Instantiate(CombatTextPrefab, transform.position + Vector3.up, Quaternion.identity).OnInit(damage);
+    //    }
+    //}
 }

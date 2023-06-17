@@ -11,6 +11,7 @@ public class Kunai : MonoBehaviour
     void Start()
     {
         rb.velocity = transform.right * 5f;
+        OnInit();
     }
 
     public void OnInit()
