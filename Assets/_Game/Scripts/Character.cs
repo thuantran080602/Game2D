@@ -8,13 +8,15 @@ public class Character : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] protected HealthBar healthBar;
     [SerializeField] protected CombatText CombatTextPrefab;
-    [SerializeField] public float hp = 100;
+    [SerializeField] public float hp;
 
     public float regenRate = 5f;// toc do hoi mau(so giay giua moi lan hoi mau)
     public float regenAmount = 10f;// so luong mau hoi moi lan
     private bool isRegenHealth;// kiem tra xem hoi mau dang thuc hien ko
     public float maxHp = 100;
     private string currentAnimName;
+    public float invincibleThreshold = 30f;
+    private bool isInvincible = false;
     
 
 
@@ -23,6 +25,7 @@ public class Character : MonoBehaviour
     private void Start()
     {
         OnInit();
+        hp = maxHp;
     }
   
  
@@ -53,9 +56,21 @@ public class Character : MonoBehaviour
     }
     public void OnHit(float damage)
     {
-        if (!IsDead)
+        if (isInvincible)
         {
+            return; // Neu dang o trang thai  bat tu thi khong nhan sat thuong
+        }
+        
             hp -= damage;
+        if (hp <= 0f)
+        {
+            Die();
+        } else if (hp <= invincibleThreshold && this is Player)
+        {
+            // nhan vat player duoi nguong mau bat tu
+            isInvincible = true;
+            Invoke(nameof(ResetInvincibility), 5f);// sau 5s, bo trang thai bat tu
+        }
 
             if (IsDead)
             {
@@ -74,9 +89,10 @@ public class Character : MonoBehaviour
                     StopRegenHealth();
                 }
             }
+
             healthBar.SetNewHp(hp);
             Instantiate(CombatTextPrefab, transform.position + Vector3.up, Quaternion.identity).OnInit(damage);
-        }
+        
     }
     private void StartRegenHealth()
     {
@@ -105,5 +121,13 @@ public class Character : MonoBehaviour
             hp = maxHp;
         }
         healthBar.SetNewHp(hp);
+    }
+    private void Die()
+    {
+        OnDeath();
+    }
+    private void ResetInvincibility()
+    {
+        isInvincible = false;
     }
 }

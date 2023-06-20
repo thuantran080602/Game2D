@@ -14,9 +14,9 @@ public class Player : Character
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
 
-    private bool isInvincible = false;// danh dau trang thai bat tu cua doi tuong
-    private float invincibleDuration = 5f;// Thoi gian bat tu
-    private float invincibleTimer = 0f;// Dem nguoc thoi gian bat tu
+    //private bool isInvincible = false;// danh dau trang thai bat tu cua doi tuong
+    //private float invincibleDuration = 5f;// Thoi gian bat tu
+    //private float invincibleTimer = 0f;// Dem nguoc thoi gian bat tu
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isAttack = false;
@@ -33,17 +33,17 @@ public class Player : Character
     // Update is called once per frame
     void Update()
     {
-        if (isInvincible)
-        {
-            invincibleTimer -= Time.deltaTime;
+        //if (isInvincible)
+        //{
+        //    invincibleTimer -= Time.deltaTime;
 
-            if (invincibleTimer <= 0f)
-            {
-                // Khi thoi gian bat tu ket thuc
-                isInvincible = false;
-                // Cac xu ly khac khi ket thuc bat tu(neu co)
-            }
-        }
+        //    if (invincibleTimer <= 0f)
+        //    {
+        //        // Khi thoi gian bat tu ket thuc
+        //        isInvincible = false;
+        //        // Cac xu ly khac khi ket thuc bat tu(neu co)
+        //    }
+        //}
        // Debug.LogError("Update");
 
         if (IsDead)
@@ -223,11 +223,11 @@ public class Player : Character
         }
         Heal(20);
     }
-    public void MakeInvincible()
-    {
-        isInvincible = true;
-        invincibleTimer = invincibleDuration;
-    }
+    //public void MakeInvincible()
+    //{
+    //    isInvincible = true;
+    //    invincibleTimer = invincibleDuration;
+    //}
 
     //public override void OnHit(float damage)
     //{
